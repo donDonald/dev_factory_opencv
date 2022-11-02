@@ -57,7 +57,7 @@ RUN  apt update \
 # Create user
 ARG UID=2100
 ARG GID=2100
-ENV USER_NAME=dev_factory_opencv
+ENV USER_NAME=dev_factory_opencv_sdk
 RUN groupadd --gid $GID ${USER_NAME} \
  && useradd --uid $UID --gid $GID --shell /bin/bash --create-home ${USER_NAME}
 USER ${USER_NAME}

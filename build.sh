@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE_NAME=$1
+IMAGE_NAME=${1:-"dev_factory_opencv_sdk"}
 DOCKER_FILE=${2:-"./Dockerfile"}
 FLAGS=" $3 "
 if [ -z $IMAGE_NAME ]; then
@@ -9,7 +9,4 @@ if [ -z $IMAGE_NAME ]; then
 fi
 
 docker build -t $IMAGE_NAME $FLAGS -f $DOCKER_FILE  .
-#docker build --build-arg UID=$(id -u) --build-arg GID=$(id -g) -t $IMAGE_NAME $FLAGS -f $DOCKER_FILE  .
-
-
 
