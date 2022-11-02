@@ -13,7 +13,7 @@
 - As a developer I want OpenCV SDK for app development
 - As a developer I want to make this SDK well isolated, installing directly into host and making host messy is bad idea
 - As a developer I DON'T want to install this OpenCV manually from command line since it's OS specific and not cool
-- As a developer I want to have an option to test that SDK works properly.
+- As a developer I want to have an option to test that SDK works properly
 - As a developer I want to reduce probability of ***It's compiling for me/It's working for me*** cases
 - As CI/CD engineer I want a tool for building OpenCV apps right from let say Jenkins
 
@@ -51,7 +51,8 @@ Therefore X forwarding shall be setup.
 X forwarding is already setup this way:
 - .Xauthority and /tmp/.X11-unix:/ are mounted into SDK container.
 - DISPLAY is assigned for SDK container
-- On the host you shall enable X server incoming connections by running
+
+Have to enable access to hosts' X server to let X apps running on hosts's DISPLAY by running
 ```
 $ xhost +local: 
 ````
@@ -59,20 +60,7 @@ $ xhost +local:
 ---
 
 
-# Building a project with SDK
-
----
-
-
 # Commands
-
-### To pull SDK image
-```
-$ docker pull <registry>:<port>/dev_factory_opencv_sdk:4.6.0
-```
-
----
-
 
 ### To build SDK image
 ```
@@ -81,14 +69,6 @@ $ bash ./build.sh dev_factory_opencv_sdk
 
 ---
 
-
-### Enable X server access
-Have to enable access to hosts' X server to let X apps running on hosts's DISPLAY
-```
-$ xhost +local: 
-```
-
----
 
 
 ### To run SDK image
@@ -120,4 +100,13 @@ $ bash ./run.sh dev_factory_opencv_sdk --entrypoint="/home/dev_factory_opencv_sd
 ```
 $ bash ./run.sh dev_factory_opencv_sdk --entrypoint="/home/dev_factory_opencv_sdk/test.performance.sh"
 ```
+
+---
+
+
+### To pull SDK image
+```
+$ docker pull <registry>:<port>/dev_factory_opencv_sdk:<tag>
+```
+
 

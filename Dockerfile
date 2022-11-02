@@ -20,6 +20,7 @@ RUN apt update \
                    lsof \
                    mc \
                    vim \
+                   tmux \
                    less \
                    git \
                    tig \
@@ -140,6 +141,16 @@ COPY --chown=${USER_NAME}:${USER_NAME} \
      files/test.performance.sh \
      files/test.python.sh \
      /home/${USER_NAME}/
+
+
+
+
+# Setup vim and mc
+RUN echo "set tabstop=4\nset shiftwidth=4\nset softtabstop=4\nset expandtab" | tee -a /home/${USER_NAME}/.vimrc
+RUN echo "export EDITOR=vim" | tee -a /home/${USER_NAME}/.bashrc
+USER root
+RUN echo "regex/i/\.(md|log|txt|js|json|ejs|yml|j2|cfg|xml|sql)$\n    Include=editor" | tee -a /etc/mc/mc.ext
+USER ${USER_NAME}
 
 
 
