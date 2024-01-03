@@ -1,11 +1,11 @@
 #!/bin/bash
 
+pushd -n $(pwd)
+
 cd
 
 # Print out info
 ./sysinfo.sh
-
-pushd -n $(pwd)
 
 cd $HOME/opencv/build/bin
 # https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html

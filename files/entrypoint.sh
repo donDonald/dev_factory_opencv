@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd /home/dev_factory_opencv_sdk
-#chown dev_factory_opencv:dev_factory_opencv_sdk /home/dev_factory_opencv_sdk/.Xauthority
-#su - dev_factory_opencv_sdk
+echo "whoami:$(whoami)"
+echo "USER:$USER"
+echo "id:$(id)"
 
-/bin/bash
+cd && bash
 

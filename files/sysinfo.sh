@@ -2,7 +2,9 @@
 
 echo "date:$(LC_ALL=en_US.UTF-8  date)"
 echo "host:$(hostname)"
-echo "user:$(whoami)"
+echo "whoami:$(whoami)"
+echo "USER:$USER"
+echo "id:$(id)"
 echo "groups:$(groups)"
 echo "cpus:$(cat /proc/cpuinfo | grep processor | wc -l)"
 echo "cpu mhz:$(lscpu | grep "CPU max MHz" | awk '{print $4;}')"
