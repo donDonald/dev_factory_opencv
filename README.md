@@ -3,8 +3,8 @@
 </div>
 
 # Intro
-    OpenCV 4.6.0 SDK isolated into a docker continer
-    Docker image with opencv 4.6.0 and basic dev tools
+OpenCV 4.6.0 SDK isolated into a docker continer
+Docker image with opencv 4.6.0 and basic dev tools
 
 ---
 
@@ -109,4 +109,83 @@ $ bash ./run.sh dev_factory_opencv_sdk --entrypoint="/home/dev_factory_opencv_sd
 $ docker pull <registry>:<port>/dev_factory_opencv_sdk:<tag>
 ```
 
+---
+
+
+# Developing with SDK docker image
+SDK contains [OpenCV](https://docs.opencv.org/4.6.0/) version ***4.6.0***
+
+---
+
+
+## Code syncup between host and SDK container
+The whole ***src*** folder is mounted into SDK container by ***run.sh*** script.
+Therefor the best option to deploy any codebase into SDK container for build purpose you shall:
+ * Copy your codebase into ***src*** folder
+ * Update ***run.sh*** script and mount any hosts foder containing a codebase into SDK container
+
+Using mounting into SDK container makes any changes inside of a mounted folder, ***src*** for instance,  appear in SDK container and vice-versa.
+
+---
+
+
+## Buiding examples
+The ***src*** folder contains a set of custom OpenCV examples.
+Every example contains buiding and running instauctions.
+
+Examples list:
+* [src/examples/DisplayImage](src/examples/DisplayImage/README.md)
+
+---
+
+
+## Building procedures
+Building a procect can be don by many ways.
+
+---
+
+
+### Buiding inside SDK container manually
+In this case SDK conatiner is run like this:
+```
+bash run.sh
+```
+
+All building procedures are done inside SDK container manually.\
+Mentioned above ***DisplayImage*** documents use this option, all build commands issued manually.\
+Check [src/examples/DisplayImage](src/examples/DisplayImage/README.md)
+
+---
+
+
+### Buiding and running inside SDK container, providing a special entrypoint
+In this case a project meant to be built shall have a build script.\
+This script is used as an antrypoint once SDK container, container gets started calls that build script, gets things done and stops.
+
+---
+
+
+***DisplayImage*** example has such a build script named build.sh.
+To build the example:
+```
+bash ./run.sh dev_factory_opencv_sdk --entrypoint="/home/dev_factory_opencv_sdk/src/examples/DisplayImage/build.sh"
+```
+
+<div align="center">
+    <img width="70%" src="images/DisplayImage.build.png">
+</div>
+
+---
+
+
+***DisplayImage*** example also has a run script named run.sh.
+To run the example:
+```
+bash ./run.sh dev_factory_opencv_sdk --entrypoint="/home/dev_factory_opencv_sdk/src/examples/DisplayImage/run.sh"
+
+```
+
+<div align="center">
+    <img width="70%" src="images/DisplayImage.run.png">
+</div>
 
