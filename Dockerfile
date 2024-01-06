@@ -4,7 +4,15 @@ MAINTAINER Pavel Taranov <pavel.a.taranov@gmail.com>
 
 
 
-#To skip setting itimezonei, to set timezone: echo "Australia/Adelaide" | sudo tee /etc/timezone
+# Define versions for main components
+ARG NUMPY_VERSION="1.26.2"
+ARG OPENCV_VERSION="4.8.0"
+ARG OPENCV_PYTHON_VERSION="4.8.*"
+
+
+
+
+# To skip setting itimezonei, to set timezone: echo "Australia/Adelaide" | sudo tee /etc/timezone
 ENV DEBIAN_FRONTEND=noninteractive
 
 
@@ -37,7 +45,7 @@ RUN apt update \
 # Cleanup apt \
  && apt clean \
 # Setup mc \
- && echo "regex/i/\.(md|log|txt|js|json|ejs|yml|j2|cfg|xml|sql|py|ipynb)$\n    Include=editor" | tee -a /etc/mc/mc.ext
+ && echo "regex/i/\.(md|log|txt|js|json|ejs|yml|j2|cfg|xml|sql|py|ipynb|sh)$\n    Include=editor" | tee -a /etc/mc/mc.ext
 
 
 
@@ -46,15 +54,8 @@ RUN apt update \
 # libgl1 - Fixing ImportError: libGL.so.1: cannot open shared object file: No such file or directory
 RUN apt update \
  && apt install -y libsm6 libxext6 libxrender-dev libgl1 \
- && pip install numpy opencv-python \
-# Cleanup apt \
- && apt clean
-
-
-
-
-RUN apt update \
  && apt install -y libgtk2.0-dev pkg-config \
+ && pip install numpy==$NUMPY_VERSION opencv-python==$OPENCV_PYTHON_VERSION \
 # Cleanup apt \
  && apt clean
 
@@ -81,30 +82,29 @@ RUN echo "set tabstop=4\nset shiftwidth=4\nset softtabstop=4\nset expandtab" | t
 
 
 
-# https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html
-ARG VERSION=4.6.0
 
 
 
 
 ## Use locally stored files
-#COPY files/opencv/archive/$VERSION}.zip /home/$USER_NAME/opencv.zip
-#COPY files/opencv_contrib/archive/$VERSION}.zip /home/$USER_NAME/opencv_contrib.zip
-#COPY files/opencv_extra/archive/$VERSION}.zip /home/$USER_NAME/opencv_extra.zip
+#COPY files/opencv/archive/$OPENCV_VERSION}.zip /home/$USER_NAME/opencv.zip
+#COPY files/opencv_contrib/archive/$OPENCV_VERSION}.zip /home/$USER_NAME/opencv_contrib.zip
+#COPY files/opencv_extra/archive/$OPENCV_VERSION}.zip /home/$USER_NAME/opencv_extra.zip
 
 
 
 
 # Download files from remote
 RUN cd /home/$USER_NAME \
-    && wget https://github.com/opencv/opencv/archive/$VERSION.zip -O opencv.zip \
-    && wget https://github.com/opencv/opencv_contrib/archive/$VERSION.zip -O opencv_contrib.zip \
-    && wget https://github.com/opencv/opencv_extra/archive/$VERSION.zip -O opencv_extra.zip 
+    && wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip -O opencv.zip \
+    && wget https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.zip -O opencv_contrib.zip \
+    && wget https://github.com/opencv/opencv_extra/archive/$OPENCV_VERSION.zip -O opencv_extra.zip 
 
 
 
 
 # https://www.pyimagesearch.com/2016/07/11/compiling-opencv-with-cuda-support/
+# https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html
 RUN cd /home/$USER_NAME \
     && unzip ./opencv.zip \
     && rm ./opencv.zip \
@@ -112,9 +112,9 @@ RUN cd /home/$USER_NAME \
     && rm ./opencv_contrib.zip\
     && unzip ./opencv_extra.zip \
     && rm ./opencv_extra.zip \
-    && ln -s ./opencv-$VERSION opencv \
-    && ln -s ./opencv_contrib-$VERSION opencv_contrib \
-    && ln -s ./opencv_extra-$VERSION opencv_extra \
+    && ln -s ./opencv-$OPENCV_VERSION opencv \
+    && ln -s ./opencv_contrib-$OPENCV_VERSION opencv_contrib \
+    && ln -s ./opencv_extra-$OPENCV_VERSION opencv_extra \
     && mkdir -p opencv/build \
     && cd opencv/build \
     && cmake -D CMAKE_INSTALL_PREFIX=/usr/local \

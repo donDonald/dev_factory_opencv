@@ -3,8 +3,10 @@
 </div>
 
 # Intro
-OpenCV 4.6.0 SDK isolated into a docker continer
-Docker image with opencv 4.6.0 and basic dev tools
+Docker image with OpenCV, math tools and basic dev tools:
+* OpenCV="4.8.0"
+* numpy="1.16.2"
+* opencv-python="4.8.*"
 
 ---
 
@@ -113,7 +115,7 @@ $ docker pull <registry>:<port>/dev_factory_opencv_sdk:<tag>
 
 
 # Developing with SDK docker image
-SDK contains [OpenCV](https://docs.opencv.org/4.6.0/) version ***4.6.0***
+SDK contains [OpenCV](https://docs.opencv.org/4.8.0/) version ***4.8.0***
 
 ---
 
